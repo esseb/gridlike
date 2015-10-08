@@ -4,12 +4,7 @@
     this.isVisible = false;
 
     this.id = null;
-    this.columnCount = null;
-    this.columnWidth = null;
-    this.gutterWidth = null;
-    this.columnColor = 'red';
-    this.opacity = 0.5;
-    this.zIndex = 99999;
+    this.columns = null;
     this.classNames = {
       grid: 'gridlike',
       column: 'gridlike__column'
@@ -26,12 +21,7 @@
     }
 
     this.initOptions = function(options) {
-      this.columnCount = options.columnCount || this.columnCount;
-      this.columnWidth = options.columnWidth || this.columnWidth;
-      this.gutterWidth = options.gutterWidth || this.gutterWidth;
-      this.columnColor = options.columnColor || this.columnColor;
-      this.opacity = options.opacity || this.opacity;
-      this.zIndex = options.zIndex || this.zIndex;
+      this.columns = options.columns || this.columns;
 
       var classNames = options.classNames || {};
       classNames.grid = options.classNames.grid || this.classNames.grid;
@@ -41,42 +31,43 @@
 
     this.initEventListener = function() {
       document.addEventListener('keydown', function(event) {
+        if (this.isElementAcceptingKeyInput(event.target)) {
+          return;
+        }
+
         if (event.keyCode != 71) {  // 'g'
           return;
         }
 
         this.isVisible = !this.isVisible;
-        this.grid.style.visibility = this.isVisible ? 'visible' : 'hidden';
+        this.grid.style.display = this.isVisible ? 'block' : 'none';
       }.bind(this));
+    }
+
+    this.isElementAcceptingKeyInput = function(element) {
+      var nodeNames = [
+        'INPUT',
+        'TEXTAREA',
+        'SELECT', // <select> and option doesn't seem to trigger a keydown
+        'OPTION'  // event, but we test them just in case.
+      ];
+
+      for (var i = 0; i < nodeNames.length; i++) {
+        if (element.nodeName == nodeNames[i]) {
+          return true;
+        }
+      }
+
+      return false;
     }
 
     this.createGrid = function() {
       this.grid = this.createElement(this.classNames.grid);
-      this.grid.style.overflow = 'hidden';
-      this.grid.style.visibility = 'hidden',
-      this.grid.style.position = 'fixed';
-      this.grid.style.top = 0;
-      this.grid.style.right = 0;
-      this.grid.style.bottom = 0;
-      this.grid.style.left = 0;
-      this.grid.style.width = this.calcGridWidth() + 'px';
-      this.grid.style.margin = '0 auto';
-      this.grid.style.opacity = this.opacity;
-      this.grid.style.zIndex = this.zIndex;
+      this.grid.style.display = 'none',
       this.grid.style.pointerEvents = 'none';
 
-      for (var i = 0; i < this.columnCount; i++) {
-        var column = this.createElement(this.classNames.column);
-        column.style.float = 'left';
-        column.style.width = this.columnWidth + 'px';
-        column.style.height = '100%';
-        column.style.backgroundColor = this.columnColor;
-
-        if (i > 0) {
-          column.style.marginLeft = this.gutterWidth + 'px';
-        }
-
-        this.grid.appendChild(column);
+      for (var i = 0; i < this.columns; i++) {
+        this.grid.appendChild(this.createElement(this.classNames.column));
       }
     }
 
@@ -86,16 +77,10 @@
       return element;
     }
 
-    this.calcGridWidth = function(options) {
-      var columnWidths = this.columnWidth * this.columnCount;
-      var gutterWidths = this.gutterWidth * (this.columnCount - 1);
-      return columnWidths + gutterWidths;
-    }
-
     return this.init(options);
   };
 
-  if (module && module.exports && typeof exports === 'object') {
+  if (typeof module !== 'undefined' && typeof module.exports === 'object') {
     module.exports = Gridlike;
   }
   else {
