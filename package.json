@@ -1,6 +1,6 @@
 {
   "name": "gridlike",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple tool to show grid guidelines during development",
   "main": "index.js",
   "scripts": {
