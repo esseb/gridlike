@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <title>Gridlike test page</title>
   <style>
+    *, *:before, *:after {
+      box-sizing: border-box;
+    }
+
     .grid {
         bottom: 0;
         left: 0;
@@ -34,6 +38,14 @@
       position: absolute;
       right: 0;
       top: 0;
+    }
+
+    /* Reduce the gutter width on narrower devices */
+    @media only screen and (max-width: 800px) {
+      .grid__column {
+        border-left-width: 4px;  /* Half of gutter width of 4px */
+        border-right-width: 4px; /* Half of gutter width of 4px */
+      }
     }
   </style>
 </head>
