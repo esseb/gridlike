@@ -14,42 +14,21 @@
         margin: 0 auto;
         max-width: 984px; /* 60px column width and 22px gutter width with room for half a gutter on each side */
         opacity: 0.5;
-        overflow: hidden;
+        overflow: hidden; /* Simple clearfix */
         position: fixed;
         right: 0;
         top: 0;
     }
 
     .grid__column {
-      border-left: 11px solid transparent;  /* Half of gutter width of 22px */
-      border-right: 11px solid transparent; /* Half of gutter width of 22px */
+      background-clip: content-box;
+      background-color: red;
       float: left;
       height: 100%;
+      padding-left: 1%;  /* Half of gutter width of 2% */
+      padding-right: 1%; /* Half of gutter width of 2% */
       position: relative;
       width: 8.333%;  /* 100% / 12 columns */
-    }
-
-    /**
-     * We can't give the columns a background colour directly because of the borders, so we use a
-     * pseudo element instead.
-     */
-    .grid__column:after {
-      background-color: red;
-      bottom: 0;
-      content: "";
-      display: block;
-      left: 0;
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-
-    /* Reduce the gutter width on narrower devices */
-    @media only screen and (max-width: 800px) {
-      .grid__column {
-        border-left-width: 4px;  /* Half of gutter width of 4px */
-        border-right-width: 4px; /* Half of gutter width of 4px */
-      }
     }
   </style>
 </head>
