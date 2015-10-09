@@ -5,7 +5,7 @@ Usage:
 new Gridlike({
     columns: 12,
     classNames: {
-        grid: 'grid grid--mobile',
+        grid: 'grid',
         column: 'grid__column'
     }
 });

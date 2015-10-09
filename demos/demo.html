@@ -29,6 +29,10 @@
       width: 8.333%;  /* 100% / 12 columns */
     }
 
+    /**
+     * We can't give the columns a background colour directly because of the borders, so we use a
+     * pseudo element instead.
+     */
     .grid__column:after {
       background-color: red;
       bottom: 0;
@@ -51,17 +55,21 @@
 </head>
 <body>
   <h1>Gridlike test page</h1>
+  <p>Press "g" to toggle the grid.</p>
 
   <h2>Input</h2>
-  <p>Try to type "g" in the input field.</p>
+  <p>Try to type "g" in the input field. The grid should not be toggled.</p>
   <input>
 
   <h2>Textarea</h2>
-  <p>Try to type "g" in the textarea.</p>
+  <p>Try to type "g" in the textarea. The grid should not be toggled.</p>
   <textarea></textarea>
 
   <h2>Select</h2>
-  <p>Expand the select box and try to select the option "Gamme" by typing "g".</p>
+  <p>
+    Expand the select box and try to select the option "Gamma" by typing "g".
+    The grid should not be toggled.
+  </p>
   <select>
     <option value="0">Alpha</option>
     <option value="1">Beta</option>
